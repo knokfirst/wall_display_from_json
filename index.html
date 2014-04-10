@@ -1,0 +1,111 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+  <title>Behang.</title>
+  <meta name="description" content="A collection of the Behang wallpapers." />
+  
+  <style type="text/css">
+    body {
+      background: url("http://apollo.xfer.in/appwalls/fullsize/Behang-3.jpg") repeat center;
+      color: #aaa;
+      font-family: sans-serif;
+    }
+    
+    .wallie-category {
+      overflow: auto;
+    }
+    
+    h1 {
+      clear: both;
+      margin-top: 50px;
+      font-weight: normal;
+      font-size: 2em;
+      letter-spacing: -0.05em;
+      border-bottom: 3px dotted #888;
+    }
+    
+    .wallie {
+      display: block;
+      float: left;
+      width: 180px;
+      border: 1px solid #555;
+      padding: 3px;
+      margin: 15px;
+      text-align: right;
+      border-radius: 4px;
+      color: #aaa;
+      text-decoration: none;
+      text-shadow: -1px 2px 0 #222;
+      background: rgba(200,200,200,0.2);
+    }
+    
+    .wallie:hover {
+      background: #555;
+      color: #fff;
+      text-shadow: -1px 2px 2px #000;
+    }
+
+    span {
+      padding: 0 5px;
+    }
+    
+    .wallie-name {
+      font-size: 1.1em;
+    }
+
+    .wallie-author {
+      font-style: italic;
+      font-size: 0.8em;
+    }
+
+    .wallie img {
+      max-width: 100%;
+      height: auto;
+      padding-bottom: 10px;
+    }
+  </style>
+  
+</head>
+
+<body>
+  <div id="wallie-container"></div>
+  <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+  <script type="text/javascript">
+    $(window).load(function(){
+
+        $.getJSON('behang_manifest.json', function(data) {
+            wallie = '';
+            var categories = data.wallpapers.category;
+
+            $.each(categories, function(catKey, category) {
+                wallie += '<div class="wallie-category">';
+                wallie +=   '<h1>'+ category.name +'</h1>';
+                $.each(category.wallpaper, function(wallKey, wallpaper) {
+                    wallie += '<a class="wallie" href="'+ wallpaper.url +'" rel="external">';
+                    wallie += '<img src="'+ wallpaper.thumbUrl +'" />';
+                    wallie += '<br />';
+                    wallie += '<span class="wallie-name">'+ wallpaper.name +'</span>';
+                    wallie += '<br />';
+                    wallie += '<span class="wallie-author">by <b>'+ wallpaper.author +'</b></span>';
+                    wallie += '</a>';
+                    
+                });
+                wallie += '</div>';
+            });
+
+            $("#wallie-container").html(wallie);
+            $('a[rel^="external"]').click( function() {
+                    window.open( $(this).attr('href') );
+                    return false;
+            });
+
+        });
+    });
+        
+  </script>
+</body>
+</html>
